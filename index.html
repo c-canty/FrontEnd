@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- https://www.bootstrapcdn.com/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/Chart.min.js"></script>
+    <script src="FrontEnd\node_modules\chart.js"></script>
+
+
+</head>
+
+<body style="background-color: #000033;">
+    <br>
+    <div class="container text-center">
+        <div class="row" style="color: white;">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+                <h1>Climate</h1>
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="app">
+        <div class="container text-center">
+            <div class="row" style="color: white;">
+                <div class="col-sm-4">
+                    <h2>Temperature</h2>
+                    <h3>{{ latestMeasurement.temperature || 'No data' }} °C</h3>
+                </div>
+                <div class="col-sm-4">
+                    <h2>Humidity</h2>
+                    <h3>{{ latestMeasurement.humidity || 'No data' }} %</h3>
+                </div>
+                <div class="col-sm-4">
+                    <h2>Pressure</h2>
+                    <h3>{{ latestMeasurement.pressure || 'No data' }} hPa</h3>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container text-center">
+            <div class="row" style="color: white;">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <table class="table-bordered table-hover" style="width: 100%; margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 10px;">Time</th>
+                                <th style="padding: 10px;">Temperature</th>
+                                <th style="padding: 10px;">Humidity</th>
+                                <th style="padding: 10px;">Pressure</th>
+                            </tr>
+                        </thead>
+                        <tbody style="color:gray">
+                            <tr v-for="(measurement, index) in displayedMeasurements" :key="index" style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">{{ measurement.time }}</td>
+                                <td style="padding: 10px;">{{ measurement.temperature }}</td>
+                                <td style="padding: 10px;">{{ measurement.humidity }}</td>
+                                <td style="padding: 10px;">{{ measurement.pressure }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+                    <div class="text-center mt-3">
+                        <button @click="firstPage" :disabled="currentPage === 1" class="btn btn-dark" >First</button>
+                        <button @click="previousPage" :disabled="currentPage === 1" class="btn btn-dark" style="margin: 10px;">Previous</button>
+                        <span>{{ currentPage }} of {{ totalPages }}</span>
+                        <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-dark" style="margin: 10px;">Next</button>
+                        <button @click="lastPage" :disabled="currentPage === totalPages" class="btn btn-dark" >Last</button>
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+  
+      <br>
+      <div class="container text-center" style="color: white">
+        <div class="row">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
+                <h2>Temperature</h1>
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="color: white;">
+                <canvas id="temperatureChart" width="400" height="200"></canvas>  
+            </div>
+            <div class="col-sm-1"></div>    
+      </div>
+    <br>
+    </div>       
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
